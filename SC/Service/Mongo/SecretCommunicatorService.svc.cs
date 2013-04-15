@@ -13,11 +13,10 @@ using SC.Mongo.Entity;
 
 namespace SC.Mongo
 {
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class SecretCommunicatorService : ISecretCommunicatorService
     {
         string connectionString = ConfigurationManager.AppSettings.Get("MONGOHQ_URL");
-
         MongoCollection<ChannelDocument> Channels { get; set; }
 
         public SecretCommunicatorService()
@@ -47,8 +46,10 @@ namespace SC.Mongo
 
         protected MongoDatabase GetDb()
         {
-            string dbName = this.connectionString.Split('/').Last();
-            return new MongoClient(this.connectionString).GetServer().GetDatabase(dbName);
+            MongoUrl url = new MongoUrl(this.connectionString);
+            MongoClient client = new MongoClient(url);
+            MongoServer server = client.GetServer();
+            return server.GetDatabase(url.DatabaseName);
         }
     }
 }

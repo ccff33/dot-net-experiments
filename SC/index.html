@@ -1,27 +1,81 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <title>SC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap -->
     <link href="Content/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="Content/style.css" rel="stylesheet" />
 </head>
+
 <body>
+
     <div class="navbar">
         <div class="navbar-inner">
             <a class="brand">WCF</a>
-            <ul class="nav">
-                <li><a href="#">Index</a></li>
+            <ul class="nav nav-header">
+                <li class="active"><a href="#">Mongo</a></li>
             </ul>
         </div>
     </div>
+
     <div class="container">
-        <h1>Bootstrap starter template</h1>
-        <p>
-            Use this document as a way to quick start any new project.<br>
-            All you get is this message and a barebones HTML document.</p>
+
+        <ul class="nav nav-tabs" id="menu">
+            <li class="active"><a href="#register" data-toggle="tab">Register Channel</a></li>
+            <li><a href="#use" data-toggle="tab">Use Channel</a></li>
+        </ul>
+
+        <div id="menuContent" class="tab-content">
+
+            <!-- Register channel tab -->
+            <div id="register" class="tab-pane active">
+
+                <h1>Register channel</h1>
+
+                <!-- Alert -->
+                <div class="alert alert-block hide">
+                    <button class="close" onclick="$('#register .alert').hide()" type="button">×</button>
+                    <h4 class="alert-heading">egewr</h4>
+                </div>
+
+                <!-- Form -->
+                <form class="form-horizontal" action="#">
+                    <div class="control-group">
+                        <input type="text" class="input-long input-block-level" id="channel" placeholder="Channel Name" />
+                    </div>
+                    <div class="control-group">
+                        <input type="password" class="input-long input-block-level" id="password" placeholder="Password" />
+                    </div>
+                    <div class="control-group">
+                        <button type="submit" class="btn btn-large btn-block">Register</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Use channel tab -->
+            <div id="use" class="tab-pane">
+
+            </div>
+
+        </div>
     </div>
-    <script src="Scripts/jquery-1.9.1.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
+
+<script src="Scripts/jquery-1.9.1.min.js"></script>
+<script src="Scripts/bootstrap.min.js"></script>
+<script src="Scripts/sc.js"></script>
+
+<script>
+
+    // handle register form submition
+    $('#register button[type="submit"]').click(function () {
+        var channelName = $('#channel').val();
+        var channelPassword = $('#password').val();
+        registerChannel(channelName, channelPassword, $('#register .alert'));
+    });
+
+</script>
+
 </body>
 </html>

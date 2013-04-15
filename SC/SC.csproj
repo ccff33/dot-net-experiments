@@ -71,8 +71,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\style.css" />
     <Content Include="index.html" />
     <Content Include="LICENSE.txt" />
+    <Content Include="Scripts\sc.js" />
     <Content Include="Service\Mongo\SecretCommunicatorService.svc" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
