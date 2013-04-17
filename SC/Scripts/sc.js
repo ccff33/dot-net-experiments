@@ -1,4 +1,4 @@
-﻿var serviceUrl = '/Service/Mongo/SecretCommunicatorService.svc';
+﻿var serviceUrl = 'Service/Mongo/SecretCommunicatorService.svc';
 
 /*
     Registers a new channel through post request.
