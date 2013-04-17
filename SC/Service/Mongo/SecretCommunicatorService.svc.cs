@@ -5,7 +5,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Web;
-using System.Configuration;
+using System.Web.Configuration;
 
 using MongoDB.Driver;
 
@@ -16,7 +16,7 @@ namespace SC.Mongo
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class SecretCommunicatorService : ISecretCommunicatorService
     {
-        string connectionString = ConfigurationManager.AppSettings.Get("MONGOHQ_URL");
+        string connectionString = WebConfigurationManager.AppSettings.Get("MONGOHQ_URL");
         MongoCollection<ChannelDocument> Channels { get; set; }
 
         public SecretCommunicatorService()
