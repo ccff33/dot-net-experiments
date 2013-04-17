@@ -6,8 +6,7 @@
 function registerChannel(channelName, channelPassword, responseAlert) {
     $.ajax({
         type: 'post',
-        url: serviceUrl + '/register',
-        data: { name: channelName, pwd: channelPassword },
+        url: serviceUrl + '/register?name=' + channelName + '&pwd=' + channelPassword,
         success: function () {
             displaySuccess(responseAlert, "Channel registered successfully");
         },
