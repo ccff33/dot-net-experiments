@@ -6,9 +6,29 @@
 function registerChannel(channelName, channelPassword, responseAlert) {
     $.ajax({
         type: 'post',
-        url: serviceUrl + '/register?name=' + channelName + '&pwd=' + channelPassword,
+        url: serviceUrl + '/register',
+        data: JSON.stringify({ Name: channelName, Password: channelPassword }),
+        contentType: 'application/json',
         success: function () {
             displaySuccess(responseAlert, "Channel registered successfully");
+        },
+        error: function (jxh, text, errorThrown) {
+            displayError(responseAlert, errorThrown);
+        }
+    });
+}
+
+/*
+    Creates a secret through post request.
+*/
+function createMessage(channelName, channelPassword, text, responseAlert) {
+    $.ajax({
+        type: 'post',
+        url: serviceUrl + '/message/create',
+        data: JSON.stringify({ channel: {Name: channelName, Password: channelPassword}, text: text }),
+        contentType: 'application/json',
+        success: function () {
+            displaySuccess(responseAlert, "Message created");
         },
         error: function (jxh, text, errorThrown) {
             displayError(responseAlert, errorThrown);

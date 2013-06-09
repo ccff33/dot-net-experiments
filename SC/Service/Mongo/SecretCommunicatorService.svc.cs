@@ -11,6 +11,8 @@ using MongoDB.Driver;
 
 using SC.Mongo.Entity;
 
+using SC.Model;
+
 namespace SC.Mongo
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
@@ -18,18 +20,21 @@ namespace SC.Mongo
     {
         string connectionString = WebConfigurationManager.AppSettings.Get("MONGOHQ_URL");
         MongoCollection<ChannelDocument> Channels { get; set; }
+        MongoCollection<SecretDocument> Secrets { get; set; }
 
         public SecretCommunicatorService()
         {
-            this.Channels = this.GetDb().GetCollection<ChannelDocument>(ChannelDocument.CollectionName);
+            var db = this.GetDb();
+            this.Channels = db.GetCollection<ChannelDocument>(ChannelDocument.CollectionName);
+            this.Secrets = db.GetCollection<SecretDocument>(SecretDocument.CollectionName);
         }
 
-        public void RegisterChannel(string channelName, string password)
+        public void RegisterChannel(Channel c)
         {
             ChannelDocument channel = new ChannelDocument();
-            channel.Name = channelName;
+            channel.Name = c.Name;
             channel.Salt = BCrypt.Net.BCrypt.GenerateSalt();
-            channel.Password = BCrypt.Net.BCrypt.HashPassword(password, channel.Salt);
+            channel.Password = BCrypt.Net.BCrypt.HashPassword(c.Password, channel.Salt);
 
             OutgoingWebResponseContext response = WebOperationContext.Current.OutgoingResponse;
 
@@ -42,6 +47,27 @@ namespace SC.Mongo
             {
                 response.StatusCode = System.Net.HttpStatusCode.Forbidden;
             }
+        }
+
+        public void CreateMessage(Channel channel, string text)
+        {
+            ChannelDocument c = this.Channels.FindOne((IMongoQuery)QueryDocument.Create(new {Name = channel.Name}));
+
+            OutgoingWebResponseContext response = WebOperationContext.Current.OutgoingResponse;
+            if (c != null)
+            {
+                if (c.Password == BCrypt.Net.BCrypt.HashPassword(channel.Password, c.Salt))
+                {
+                    response.StatusCode = System.Net.HttpStatusCode.OK;
+                }
+            }
+
+            response.StatusCode = System.Net.HttpStatusCode.Forbidden;
+        }
+
+        public IEnumerable<Secret> GetLastSecrets(string channelName, string password, int count)
+        {
+            return new List<Secret>();
         }
 
         protected MongoDatabase GetDb()

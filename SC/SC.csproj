@@ -90,7 +90,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service\Model\Channel.cs" />
+    <Compile Include="Service\Model\Secret.cs" />
     <Compile Include="Service\Mongo\Entity\ChannelDocument.cs" />
+    <Compile Include="Service\Mongo\Entity\SecretDocument.cs" />
     <Compile Include="Service\Mongo\SecretCommunicatorService.svc.cs">
       <DependentUpon>SecretCommunicatorService.svc</DependentUpon>
     </Compile>
